@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 150 20% 97%;
+    --foreground: 160 30% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 160 30% 8%;
+    --primary: 160 84% 30%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 150 15% 93%;
+    --secondary-foreground: 160 30% 12%;
+    --muted: 150 12% 94%;
+    --muted-foreground: 160 8% 40%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 150 12% 88%;
+    --input: 150 12% 85%;
+    --ring: 160 84% 30%;
+    --radius: 0.9rem;
+  }
+
+  * {
+    @apply border-border;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    /* Terasa seperti aplikasi native saat di-install */
+    overscroll-behavior-y: none;
+  }
+
+  /* Cegah zoom otomatis iOS saat fokus input */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+@layer utilities {
+  .pt-safe {
+    padding-top: max(env(safe-area-inset-top), 0.75rem);
+  }
+  .pb-safe {
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+/* Liquid-glass surfaces for the AI assistant */
+.ai-fab {
+  position: fixed; z-index: 40; right: max(1rem, env(safe-area-inset-right));
+  bottom: calc(5.7rem + env(safe-area-inset-bottom)); display: inline-flex;
+  align-items: center; gap: .55rem; border: 1px solid rgba(255,255,255,.72);
+  border-radius: 999px; padding: .8rem 1.05rem; color: #065f46; font-size: .875rem;
+  font-weight: 750; background: linear-gradient(135deg,rgba(255,255,255,.88),rgba(209,250,229,.72));
+  box-shadow: 0 10px 32px rgba(6,95,70,.18), inset 0 1px 0 rgba(255,255,255,.95);
+  backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.ai-fab:active { transform: scale(.96); }
+.ai-overlay { position: fixed; z-index: 80; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: 0; background: rgba(15,23,42,.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.ai-panel { width: 100%; max-width: 30rem; height: min( min(78dvh, 720px), calc(100dvh - env(safe-area-inset-top) - 1rem)); display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(255,255,255,.78); border-bottom: 0; border-radius: 1.8rem 1.8rem 0 0; background: linear-gradient(145deg,rgba(255,255,255,.94),rgba(240,253,250,.86)); box-shadow: 0 -18px 70px rgba(15,23,42,.22), inset 0 1px 0 white; backdrop-filter: blur(34px) saturate(175%); -webkit-backdrop-filter: blur(34px) saturate(175%); padding-bottom: env(safe-area-inset-bottom); }
+.ai-head { display:flex; align-items:center; gap:.75rem; padding:1rem 1rem .85rem; border-bottom:1px solid rgba(148,163,184,.22); background:rgba(255,255,255,.46); }
+.ai-close { display:flex; align-items:center; justify-content:center; width:2.4rem;height:2.4rem;border-radius:50%;background:rgba(148,163,184,.12); }
+.ai-messages { flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:.75rem; padding:1rem; }
+.ai-bubble { max-width:88%; border-radius:1.15rem; padding:.75rem .9rem; font-size:.9rem; line-height:1.55; white-space:pre-wrap; overflow-wrap:anywhere; }
+.ai-user { align-self:flex-end; color:white; background:linear-gradient(135deg,#059669,#0f766e); border-bottom-right-radius:.35rem; box-shadow:0 5px 15px rgba(5,150,105,.16); }
+.ai-answer { align-self:flex-start; color:#1e293b; background:rgba(255,255,255,.78); border:1px solid rgba(255,255,255,.9); box-shadow:0 4px 16px rgba(15,23,42,.06); border-bottom-left-radius:.35rem; }
+.ai-suggestion { padding:.55rem .8rem; border-radius:999px; font-size:.75rem; font-weight:650; color:#047857; background:rgba(255,255,255,.75); border:1px solid rgba(16,185,129,.22); }
+.ai-compose { display:flex; gap:.6rem; margin:.25rem .85rem .65rem; padding:.45rem; border-radius:1.2rem; border:1px solid rgba(255,255,255,.95); background:rgba(255,255,255,.75); box-shadow:inset 0 1px 4px rgba(15,23,42,.04),0 5px 20px rgba(15,23,42,.05); }
+.ai-compose input { min-width:0; flex:1; border:0; outline:0; background:transparent; padding:.55rem .65rem; color:#0f172a; font-size:16px; }
+.ai-compose button { width:2.7rem; height:2.7rem; flex-shrink:0; display:flex; align-items:center; justify-content:center; border-radius:.9rem; color:white; background:linear-gradient(135deg,#059669,#0f766e); }
+.ai-compose button:disabled { opacity:.4; }
+@media (min-width: 640px) { .ai-overlay { align-items:center; padding:1rem; } .ai-panel { height:min( min(78dvh,720px), 700px); border-bottom:1px solid rgba(255,255,255,.78); border-radius:1.8rem; } .ai-fab { bottom:1.5rem; right:1.5rem; } }
+@media (prefers-reduced-motion: reduce) { .ai-fab { transition:none; } }
+
+/* Liquid-glass ambient background */
+.fluid-background{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 15% 5%,rgba(16,185,129,.12),transparent 42%),radial-gradient(ellipse at 90% 80%,rgba(56,189,248,.10),transparent 38%)}
+.fluid-orb{position:absolute;width:min(48vw,34rem);aspect-ratio:1;border-radius:50%;filter:blur(70px);opacity:.28;will-change:transform;animation:fluid-drift 24s ease-in-out infinite alternate}
+.fluid-orb-one{background:#34d399;top:-18%;left:-12%}.fluid-orb-two{background:#67e8f9;right:-18%;top:35%;animation-delay:-8s}.fluid-orb-three{background:#a7f3d0;bottom:-25%;left:25%;animation-delay:-15s}
+@keyframes fluid-drift{from{transform:translate3d(-2%,0,0) scale(.92)}to{transform:translate3d(5%,8%,0) scale(1.08)}}
+.fluid-background.motion-reduced .fluid-orb{animation:none}
+@media(prefers-reduced-motion:reduce){.fluid-orb{animation:none}}
